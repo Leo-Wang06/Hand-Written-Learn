@@ -1,11 +1,13 @@
 // 节流JS
 
-function debounce(fn, delay, ...presetArgs) {
+// 简单说：设置一个初始时间，在获取当前时间，二者相减，与 delay 作比较，如果未到达指定时间，则直接返回函数，如果到达了，那么就再开一个新的回调函数，重复此过程。
+
+function throttle(fn, delay, ...presetArgs) {
   let startTime = 0;
-  console.log("presetArgs:", presetArgs);
+  // console.log("presetArgs:", presetArgs);
 
   return function (...callArgs) {
-    console.log("callArgs:", callArgs);
+    // console.log("callArgs:", callArgs);
 
     const endTime = Date.now();
     if (endTime - startTime < delay) return;
@@ -16,8 +18,8 @@ function debounce(fn, delay, ...presetArgs) {
     // console.log("回调函数的this:",this);
 
     /**这里为什么要透传 this 呢？
-     * 因为 btn.addEventListener("click", debounce(sayHello,1000, "小明")); 执行时，
-     * debounce 作为函数参数被传进去之后，返回了内部的 function 这个匿名函数，
+     * 因为 btn.addEventListener("click", throttle(sayHello,1000, "小明")); 执行时，
+     * throttle 作为函数参数被传进去之后，返回了内部的 function 这个匿名函数，
      * 所以说，click 实际调用的是 function 这个匿名函数，
      * 并且 fn() 前并没有调用者，
      * 在非严格模式下，fn 的 this 会被默认为 window，
@@ -61,5 +63,5 @@ function sayHello(name, ...args) {
   // console.log("sayHello的this:",this);
 }
 
-const btn = document.querySelector(".btn");
-btn.addEventListener("click", debounce(sayHello, 1000, "小明"));
+const btnThrottle = document.querySelector(".btn-throttle");
+btnThrottle.addEventListener("click", throttle(sayHello, 1000, "小明"));
