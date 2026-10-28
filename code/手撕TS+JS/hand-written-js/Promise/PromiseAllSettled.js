@@ -4,9 +4,9 @@ function myAllSettled(iterable) {
     let total = 0;
     let finished = 0;
 
-    for (const k of iterable) {
+    for (const item of iterable) {
       let index = total++;
-      Promise.resolve(k)
+      Promise.resolve(item)
         .then((value) => {
           // finished++;
           results[index] = {status: "fulfilled", value};
